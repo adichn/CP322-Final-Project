@@ -13,11 +13,12 @@ list_available_datasets()
 
 # Automobile dataset
 
-# Automobile = fetch_ucirepo(id = 10)
-# print(Automobile)
+Automobile = fetch_ucirepo(id = 10)
+print(Automobile)
 
 
 # Contraeptive Method Choice
 
-CMC = fetch_ucirepo(id = 30)
-print(CMC)
+# CMC = fetch_ucirepo(id = 30)
+# print(CMC)
+
