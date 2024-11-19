@@ -1,5 +1,5 @@
 # CP322-Final-Project
 
-- [] Pick Dataset (Options)
+- [x] Pick Dataset (Options)
   -
 -  
