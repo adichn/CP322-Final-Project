@@ -1,4 +1,5 @@
 from ucimlrepo import fetch_ucirepo, list_available_datasets
+import pandas as pd
 
 list_available_datasets()
 
