@@ -1,7 +1,7 @@
-# CP322 Final Project
+### CP322 Final Project
 
-- Decide on Dataset
-- Define Tasks to do
-- Define timeline
-- Divide tasks
+- [x] Decide on Dataset 
+- [ ] Define Tasks to do
+- [ ] Define timeline
+- [ ] Divide tasks
   
