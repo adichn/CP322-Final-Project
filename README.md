@@ -1,4 +1,4 @@
-### CP322 Final Project
+## CP322 Final Project
 
 - [x] Decide on Dataset 
 - [ ] Define Tasks to do
