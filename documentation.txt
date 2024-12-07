@@ -1,103 +1,106 @@
-# CP 322 Final Project: Student Performance Analysis
+# Documentation for CP-322 Final Project
 
-## Introduction
-The goal of this project is to analyze the factors influencing student performance in two high school courses (Math and Portuguese). Using the provided datasets, we aim to predict the final grade (`G3`) based on various demographic, social, and academic factors. This analysis will involve data exploration, feature engineering, and the implementation of machine learning models to identify key predictors of academic success.
-
-## Data Preparation
-
-### Merging Datasets
-The project utilizes two datasets: `student-mat.csv` (Math course) and `student-por.csv` (Portuguese course). To identify students common to both datasets, the following columns were used as merge keys:
-
-- `school`: Student's school
-- `sex`: Gender
-- `age`: Age
-- `address`: Home address type
-- `famsize`: Family size
-- `Pstatus`: Parents' cohabitation status
-- `Medu`: Mother's education level
-- `Fedu`: Father's education level
-- `Mjob`: Mother's job
-- `Fjob`: Father's job
-- `reason`: Reason for choosing the school
-- `nursery`: Attended nursery school
-- `internet`: Internet access at home
-
-Using these keys, a merged dataset containing 382 common students was created. This ensures consistency across features for analysis.
-
-### Data Cleaning
-The merged dataset (`student-merged.csv`) was inspected for missing values, duplicate entries, and inconsistencies. Any required imputation or data transformations will be documented in the EDA section.
-
-## Exploratory Data Analysis (EDA)
-The exploratory phase aimed to understand the data distribution, relationships between features, and their impact on the target variable (`G3`). Key steps included:
-
-1. **Summary Statistics**
-   - Basic statistics (mean, median, standard deviation) for numerical features such as `age`, `studytime`, and `absences`.
-   - Proportion analysis for categorical variables like `sex`, `school`, and `internet` access.
-
-2. **Target Variable Analysis**
-   - Distribution of `G3` was plotted to identify skewness or outliers.
-
-3. **Feature Correlations**
-   - Correlation heatmap visualizing relationships between `G3` and other features.
-
-4. **Visualization**
-   - Boxplots and scatter plots to explore how factors like `studytime`, `failures`, and `health` influence final grades.
-
-## Methodology
-
-### Feature Engineering
-Several features were derived or transformed to improve predictive power:
-
-- **Average Grades:**
-  - Created a new feature `G1_G2_avg` as the mean of `G1` and `G2`.
-- **Encoding Categorical Variables:**
-  - One-hot encoding for nominal features such as `Mjob` and `reason`.
-
-### Experimental Design
-The data was split into training, validation, and test sets using an 80-10-10 ratio to ensure reliable model evaluation.
-
-## Model Implementation
-The project involved the implementation and comparison of multiple machine learning models:
-
-1. **Linear Regression:**
-   - Baseline model for predicting `G3`.
-2. **Decision Trees:**
-   - Explored non-linear relationships.
-3. **Random Forests:**
-   - Used for feature importance analysis.
-4. **Support Vector Machines (SVM):**
-   - Tested for classification performance when binning grades.
-
-Hyperparameter tuning and cross-validation were conducted to optimize each model.
-
-## Model Evaluation
-Evaluation metrics included:
-
-- **Mean Absolute Error (MAE):** To measure prediction accuracy.
-- **Root Mean Square Error (RMSE):** To penalize larger errors.
-- **R-Squared:** To assess the goodness-of-fit for regression models.
-
-Key findings and comparisons between models will be presented with visualizations (e.g., bar charts of metric scores).
-
-## Results and Discussion
-This section will summarize:
-
-- Insights from EDA.
-- Performance of each model and their comparison.
-- Feature importance rankings and their implications.
-
-## Conclusion
-- Highlight significant predictors of student performance.
-- Discuss limitations and potential improvements (e.g., collecting more data or including additional features).
-
-## Appendices
-- Code snippets for merging datasets, feature engineering, and EDA.
-- Visualizations and plots referenced in the report.
+## Overview
+This document provides a detailed explanation of the data processing, feature engineering, and normalization pipelines implemented as part of the CP-322 final project. These steps ensure the dataset is clean, well-structured, and ready for exploratory data analysis and machine learning modeling.
 
 ---
 
-### Next Steps
-- Complete the feature engineering and finalize the EDA.
-- Implement and evaluate models as per the outlined methodology.
-- Update this documentation file with additional insights and results.
+## 1. Data Cleaning
+### Steps:
+1. **Resolve Duplicate Columns:**
+   - Retained the `'_mat'` suffix versions of features and renamed columns to remove the suffix.
 
+2. **Standardize Column Names:**
+   - All column names were converted to lowercase and any special characters or spaces were replaced with underscores for consistency.
+
+3. **Handle Missing Values:**
+   - Numeric columns were filled with the median value.
+   - Categorical columns were filled with the mode value.
+
+4. **Remove Duplicates:**
+   - Identified and removed duplicate rows from the dataset.
+
+5. **Remove Invalid Entries:**
+   - Removed rows where `age` was outside the range of 15 to 22.
+   - Ensured `G3` values were within the valid range of 0 to 20.
+
+6. **Consolidate Redundant Features:**
+   - Combined similar columns such as `guardian_mat` and `guardian_por` into a single column.
+
+7. **Validate Data Consistency:**
+   - Standardized categorical features like `school` to ensure consistent formatting.
+
+8. **Remove Outliers:**
+   - Applied the IQR method to remove outliers in numeric columns like `absences`, `G1`, `G2`, and `G3`.
+
+---
+
+## 2. Feature Engineering
+### Created/Derived Features:
+1. **`avg_early_grades`**:
+   - Average of `G1` and `G2` to represent overall early academic performance.
+
+2. **`parental_education`**:
+   - Combined `Medu` and `Fedu` to represent average parental education level.
+
+3. **`total_alcohol`**:
+   - Sum of `Dalc` and `Walc` to quantify total alcohol consumption.
+
+4. **`high_absences`**:
+   - Binary feature indicating whether `absences` exceeded the median value.
+
+5. **`failure_study_ratio`**:
+   - Ratio of `failures` to `studytime` to evaluate study efficiency.
+
+6. **`grade_improvement`**:
+   - Difference between `G2` and `G1` to measure performance trends.
+
+7. **`alc_ratio`**:
+   - Ratio of weekend to weekday alcohol consumption.
+
+---
+
+## 3. Normalization Pipelines
+Two normalization methods were implemented to prepare the dataset for machine learning models:
+
+### **1. Z-Score Normalization**
+- Standardizes numeric features by centering them around a mean of `0` and scaling to a standard deviation of `1`.
+- Ideal for distance-based algorithms and when features have different units.
+
+### **2. Robust Scaling**
+- Scales features using the median and interquartile range (IQR), reducing the influence of outliers.
+- Suitable for datasets with significant outliers.
+
+### Implementation:
+1. A preprocessing function, `preprocess_data()`, was created to apply the scalers to numeric columns.
+2. Two datasets were generated:
+   - **Z-Score Normalized Dataset:** Saved as `student-zscore-normalized.csv`.
+   - **Robust Scaled Dataset:** Saved as `student-robust-scaled.csv`.
+
+---
+
+## 4. Saved Files
+1. **`student-merged-cleaned.csv`**:
+   - Cleaned dataset after removing duplicates, outliers, and invalid entries.
+
+2. **`student-zscore-normalized.csv`**:
+   - Dataset with Z-Score normalization applied.
+
+3. **`student-robust-scaled.csv`**:
+   - Dataset with Robust Scaling applied.
+
+---
+
+## Next Steps
+1. **Exploratory Data Analysis (EDA):**
+   - Analyze the relationships between features and the target variable (`G3`).
+   - Visualize feature distributions and correlations.
+
+2. **Model Implementation:**
+   - Train multiple machine learning models using both Z-Score Normalized and Robust Scaled datasets.
+   - Compare model performance metrics (accuracy, F1-score, etc.) to select the best preprocessing method.
+
+3. **Feature Selection:**
+   - Use insights from EDA and model performance to refine feature selection.
+
+---
