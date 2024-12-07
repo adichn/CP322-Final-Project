@@ -1,0 +1,103 @@
+# CP 322 Final Project: Student Performance Analysis
+
+## Introduction
+The goal of this project is to analyze the factors influencing student performance in two high school courses (Math and Portuguese). Using the provided datasets, we aim to predict the final grade (`G3`) based on various demographic, social, and academic factors. This analysis will involve data exploration, feature engineering, and the implementation of machine learning models to identify key predictors of academic success.
+
+## Data Preparation
+
+### Merging Datasets
+The project utilizes two datasets: `student-mat.csv` (Math course) and `student-por.csv` (Portuguese course). To identify students common to both datasets, the following columns were used as merge keys:
+
+- `school`: Student's school
+- `sex`: Gender
+- `age`: Age
+- `address`: Home address type
+- `famsize`: Family size
+- `Pstatus`: Parents' cohabitation status
+- `Medu`: Mother's education level
+- `Fedu`: Father's education level
+- `Mjob`: Mother's job
+- `Fjob`: Father's job
+- `reason`: Reason for choosing the school
+- `nursery`: Attended nursery school
+- `internet`: Internet access at home
+
+Using these keys, a merged dataset containing 382 common students was created. This ensures consistency across features for analysis.
+
+### Data Cleaning
+The merged dataset (`student-merged.csv`) was inspected for missing values, duplicate entries, and inconsistencies. Any required imputation or data transformations will be documented in the EDA section.
+
+## Exploratory Data Analysis (EDA)
+The exploratory phase aimed to understand the data distribution, relationships between features, and their impact on the target variable (`G3`). Key steps included:
+
+1. **Summary Statistics**
+   - Basic statistics (mean, median, standard deviation) for numerical features such as `age`, `studytime`, and `absences`.
+   - Proportion analysis for categorical variables like `sex`, `school`, and `internet` access.
+
+2. **Target Variable Analysis**
+   - Distribution of `G3` was plotted to identify skewness or outliers.
+
+3. **Feature Correlations**
+   - Correlation heatmap visualizing relationships between `G3` and other features.
+
+4. **Visualization**
+   - Boxplots and scatter plots to explore how factors like `studytime`, `failures`, and `health` influence final grades.
+
+## Methodology
+
+### Feature Engineering
+Several features were derived or transformed to improve predictive power:
+
+- **Average Grades:**
+  - Created a new feature `G1_G2_avg` as the mean of `G1` and `G2`.
+- **Encoding Categorical Variables:**
+  - One-hot encoding for nominal features such as `Mjob` and `reason`.
+
+### Experimental Design
+The data was split into training, validation, and test sets using an 80-10-10 ratio to ensure reliable model evaluation.
+
+## Model Implementation
+The project involved the implementation and comparison of multiple machine learning models:
+
+1. **Linear Regression:**
+   - Baseline model for predicting `G3`.
+2. **Decision Trees:**
+   - Explored non-linear relationships.
+3. **Random Forests:**
+   - Used for feature importance analysis.
+4. **Support Vector Machines (SVM):**
+   - Tested for classification performance when binning grades.
+
+Hyperparameter tuning and cross-validation were conducted to optimize each model.
+
+## Model Evaluation
+Evaluation metrics included:
+
+- **Mean Absolute Error (MAE):** To measure prediction accuracy.
+- **Root Mean Square Error (RMSE):** To penalize larger errors.
+- **R-Squared:** To assess the goodness-of-fit for regression models.
+
+Key findings and comparisons between models will be presented with visualizations (e.g., bar charts of metric scores).
+
+## Results and Discussion
+This section will summarize:
+
+- Insights from EDA.
+- Performance of each model and their comparison.
+- Feature importance rankings and their implications.
+
+## Conclusion
+- Highlight significant predictors of student performance.
+- Discuss limitations and potential improvements (e.g., collecting more data or including additional features).
+
+## Appendices
+- Code snippets for merging datasets, feature engineering, and EDA.
+- Visualizations and plots referenced in the report.
+
+---
+
+### Next Steps
+- Complete the feature engineering and finalize the EDA.
+- Implement and evaluate models as per the outlined methodology.
+- Update this documentation file with additional insights and results.
+
