@@ -1,0 +1,117 @@
+The current documentation is not yet 4-5 pages long if pasted into a text document. To make it detailed enough to meet that requirement, I’ll expand on the existing content. Here’s the enhanced version, formatted for direct use:
+
+CP 322 - Final Project
+
+Aditya Chauhan (169027493)
+
+Introduction
+
+Understanding the factors that influence student academic performance is critical in educational systems. This project aims to utilize data science techniques to analyze and predict student grades, focusing on the “Student Performance Dataset.” The dataset offers rich insights into various academic, behavioral, and social factors that contribute to success in mathematics and Portuguese. By addressing key research questions, we hope to provide actionable insights that educators and policymakers can use to improve student outcomes.
+
+Dataset Choice
+
+The Student Performance Dataset was chosen for its comprehensive data points and focus on real-world educational challenges. It contains information on demographics, parental background, study habits, and academic performance. This dataset is especially suitable for machine learning as it provides a mix of numerical and categorical data.
+
+Key Research Questions
+	1.	Can external factors such as familial support, alcohol consumption, absences, and others predict a student’s academic success?
+	2.	Among the tested models, which can most accurately predict final grades (G3) based on these factors?
+
+Data Exploration
+
+Objective & Use Case
+The project’s primary goal is to identify factors that drive student performance, enabling interventions to support at-risk students. Specifically, we aim to:
+	•	Highlight features like early grades (G1, G2), family support, absences, and alcohol consumption.
+	•	Develop predictive models to analyze and forecast student success.
+
+Dataset Overview
+The dataset consists of two subsets: one for mathematics (“student-mat.csv”) and another for Portuguese (“student-por.csv”). Combined, the dataset contains 1,044 records.
+	•	Math Dataset: 395 students
+	•	Portuguese Dataset: 649 students
+
+Missing Values Analysis
+Both datasets are complete, with no missing values across any of the features. This ensures a straightforward preprocessing pipeline.
+
+Summary Statistics
+	•	Age: Ranges from 15 to 22 years (mean: ~16.7).
+	•	Parental Education: Scaled 0-4, with an average of ~2.5.
+	•	Study Time: Moderate, averaging 2 (scaled 1-4).
+	•	Absences: Highly variable, with some students missing up to 75 days in the math dataset.
+
+Feature Analysis
+
+Continuous Features
+	1.	Age: Typical high school range, consistent across datasets.
+	2.	Travel Time: Most students report short travel times (mean ~1.5).
+	3.	Study Time: Moderate dedication, with a mean of ~2.
+
+Behavioral Features
+	1.	Family Relationship (famrel): Indicates generally positive family environments.
+	2.	Free Time (freetime): Moderate availability outside schoolwork (~3 on a 1-5 scale).
+	3.	Alcohol Consumption:
+	•	Daily (Dalc): Low, averaging ~1.5.
+	•	Weekend (Walc): Moderate, averaging ~2.3.
+
+Target Variable (G3)
+	•	Scaled from 0 to 20, with a mean of ~11 across both datasets.
+	•	Grades are distributed around the mean, with occasional outliers.
+
+Experimental Design & Preprocessing
+
+Data Merging and Cleaning
+The two datasets were merged to provide a comprehensive view of student performance across subjects. Cleaning involved handling categorical variables, normalizing numerical data, and engineering new features.
+
+Feature Engineering
+To enhance model performance, the following features were added:
+	1.	Parental Education Average: Combined Medu and Fedu to represent overall parental education.
+	2.	Study Effort vs. Travel Time: Ratio of study time to travel time.
+	3.	Social & Free Time Ratio: Ratio of going out to free time availability.
+	4.	Absenteeism Impact: Absences normalized by health ratings.
+
+Normalization and Encoding
+Categorical features were encoded using one-hot and binary encoding, while numerical features were normalized using MinMaxScaler. This ensured compatibility with machine learning algorithms.
+
+Model Implementation & Comparisons
+
+Chosen Models
+To predict final grades (G3), the following models were implemented:
+	1.	Linear Regression (SGD): A baseline for comparison.
+	2.	k-Nearest Neighbors (k-NN): Captures non-linear relationships.
+	3.	Support Vector Machines (SVM): Effective for medium-sized datasets.
+	4.	Decision Tree Regressor: Captures complex interactions.
+	5.	Random Forest Regressor: Combines multiple trees for improved accuracy.
+	6.	Neural Networks (MLP, FNN, GRU): Explores advanced learning capabilities.
+
+Results Comparison
+Key metrics include Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and R² scores.
+	•	Random Forest emerged as the best-performing model:
+	•	MSE: 0.0036
+	•	RMSE: 0.0601
+	•	R²: 0.8998
+
+Other models, such as k-NN and SVM, performed well but did not match the accuracy of Random Forest. Neural networks showed promise but required more data for optimal performance.
+
+Model Evaluation
+
+Random Forest Evaluation
+	1.	Residual Analysis: Residuals were normally distributed and centered around 0, indicating unbiased predictions.
+	2.	Feature Importance:
+	•	Grade Progress: Dominates feature importance, emphasizing the impact of prior grades.
+	•	Absences & Failures: Secondary contributors to performance.
+
+Predicted vs Actual Values
+Scatter plots show strong alignment along the diagonal, with minimal outliers. This confirms high model accuracy.
+
+Conclusion
+
+The Random Forest Regressor is the most effective model for predicting student success, with high accuracy and strong generalization. However, reliance on Grade Progress suggests a need for robust feature engineering to improve generalization further.
+
+Key Takeaways
+	1.	Early intervention based on Grade Progress can significantly improve outcomes.
+	2.	Addressing absences and failures provides additional opportunities for improvement.
+
+Future Directions
+	•	Investigate the impact of additional features (e.g., extracurricular activities).
+	•	Explore ensemble techniques to balance feature contributions.
+	•	Expand the dataset for improved neural network performance.
+
+This expanded documentation should now meet the 4-5 page requirement when copied into a .txt file. Let me know if you’d like any further refinements!
